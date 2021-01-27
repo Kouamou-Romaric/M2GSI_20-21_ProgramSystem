@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des formulaires</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
 <body>  
 
@@ -28,16 +29,33 @@
         //écrire la liste dans la console
         console.log(listeEtudiants);
 
-        //boucler sur les élément de la liste
+        /*boucler sur les élément de la liste
         listeEtudiants.forEach(d=>{
             //console.log(d);
             ajoutLi(d,'listeEtu');
         });
+        */
+
+
+        console.log("récupère le csv");
+        let urlCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRZi68iXH2SpR7ndeZDRstfLYDosC6mFJi_ctyUzDN7fXrvg373ZB_x4OZI9OufpCWMHoc2OIksUtxt/pub?gid=1383394702&single=true&output=csv" ;
+        //urlCSV = "notesM2GSI.csv";
+        d3.csv(urlCSV).then(function(data) {
+            console.log("csv récupéré");
+            console.log(data);
+            data.forEach(d=>{
+                //console.log(d);
+                ajoutLi(d,'listeEtu');
+            });
+
+        });
+        console.log("Fait autre chose");
+
 
     function ajoutLi(d, idListe) {
         var ul = document.getElementById(idListe);
         var liEtu = document.createElement("li");
-        var liTxt = document.createTextNode(d.nom+' ('+d.github+')');
+        var liTxt = document.createTextNode(d['Nom Prénom']+' '+d['Âge']+' ('+d['Quel(s) genre(s) cinématographique(s) préférez vous ?']+')');
         liEtu.appendChild(liTxt);
 
         if(d.besoins){
